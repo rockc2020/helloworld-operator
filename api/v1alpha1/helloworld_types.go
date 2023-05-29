@@ -28,14 +28,25 @@ type HelloWorldSpec struct {
 	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
 	// Important: Run "make" to regenerate code after modifying this file
 
-	// Foo is an example field of HelloWorld. Edit helloworld_types.go to remove/update
-	Foo string `json:"foo,omitempty"`
+	// The following markers will use OpenAPI v3 schema to validate the value
+	// More info: https://book.kubebuilder.io/reference/markers/crd-validation.html
+	// +kubebuilder:validation:Minimum=1
+	// +kubebuilder:validation:Maximum=5
+	// +kubebuilder:validation:ExclusiveMaximum=false
+
+	// Size defines the number of replicas in the HelloWorld deployment
+	// +operator-sdk:csv:customresourcedefinitions:type=spec
+	Size int32 `json:"size,omitempty"`
 }
 
 // HelloWorldStatus defines the observed state of HelloWorld
 type HelloWorldStatus struct {
 	// INSERT ADDITIONAL STATUS FIELD - define observed state of cluster
 	// Important: Run "make" to regenerate code after modifying this file
+
+	// Message store the hello world message
+	// +operator-sdk:csv:customresourcedefinitions:type=status
+	Message string `json:"message,omitempty"`
 }
 
 //+kubebuilder:object:root=true
