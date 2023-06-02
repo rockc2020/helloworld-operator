@@ -49,9 +49,12 @@ type HelloWorldReconciler struct {
 func (r *HelloWorldReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.Result, error) {
 	_ = log.FromContext(ctx)
 
-	// TODO(user): your logic here
+	// Lookup the HelloWorld instance for this reconcile request
+	helloworld := &examplev1alpha1.HelloWorld{}
+	err := r.Get(ctx, req.NamespacedName, helloworld)
+	ctrl.Log.WithName("controllers").Info("Reconcile", "helloworld", helloworld)
 
-	return ctrl.Result{}, nil
+	return ctrl.Result{}, err
 }
 
 // SetupWithManager sets up the controller with the Manager.
